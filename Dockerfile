@@ -1,4 +1,4 @@
-ARG UBUNTU_VERSION=xenial
+ARG UBUNTU_VERSION=latest
 FROM ubuntu:$UBUNTU_VERSION
 
 RUN dpkg --add-architecture i386 \
