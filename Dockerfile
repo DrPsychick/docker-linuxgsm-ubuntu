@@ -45,7 +45,10 @@ ENV PATH=$PATH:/home/lgsm
 # make sure lgsm is part of the image
 RUN linuxgsm.sh arkserver \
   && arkserver update-lgsm \
-  && rm -rf arkserver lgsm/config-*
+  && rm -rf arkserver lgsm/config-* \
+  && mkdir serverfiles
+
+VOLUME ["/home/lgsm/serverfiles"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["linuxgsm.sh"]
