@@ -1,0 +1,46 @@
+language: bash
+services: docker
+
+env:
+  global:
+  - IMAGE=drpsychick/docker-linuxgsm-ubuntu
+  matrix:
+  - UBUNTU_VERSION=disco
+  - UBUNTU_VERSION=bionic
+  - UBUNTU_VERSION=cosmic
+  - UBUNTU_VERSION=xenial
+
+before_script:
+  - docker build -t test --build-arg UBUNTU_VERSION=$UBUNTU_VERSION .
+  - VERSION=$(eval $(docker run --rm test grep ^version= linuxgsm.sh); echo $version)
+  - eval $(ssh-agent -s)
+  - echo "$DEPLOY_PRIVATE_KEY" | ssh-add - && ssh-add -l
+  - git config --global user.email "github@drsick.net"
+  - git config --global user.name "TAG bot"
+  - git remote set-url origin "git@github.com:DrPsychick/docker-influxdb.git"
+
+
+script:
+  # test always passes
+  - echo "Ubuntu $UBUNTU_VERSION linuxgsm $VERSION"
+  - >
+    echo "Running tests...";
+    docker run test linuxgsm.sh list
+
+after_success:
+  - >
+    [ $TRAVIS_BRANCH = "master" -a $TRAVIS_PULL_REQUEST = "false" ] && {
+    if [ "$UBUNTU_VERSION" != "bionic" ]; then 
+    branch="${VERSION}-${UBUNTU_VERSION}";
+    exists="$(test -n "$(git branch -r |grep "$branch")" && echo "exists" || echo "missing")";
+    echo "Branch: $branch ($exists)";
+    if [ "$exists" == "missing" ]; then
+    git checkout -b $branch;
+    sed -i -e "s/UBUNTU_VERSION=.*/UBUNTU_VERSION=$UBUNTU_VERSION/" Dockerfile;
+    git diff Dockerfile;
+    docker build -t $IMAGE:$branch --build-arg UBUNTU_VERSION=$UBUNTU_VERSION . || exit 1;
+    git add Dockerfile && git commit -m "automated tag branch $branch" && git push -u origin $branch;
+    git tag $branch && git push --tags;
+    fi;
+    fi
+    }
