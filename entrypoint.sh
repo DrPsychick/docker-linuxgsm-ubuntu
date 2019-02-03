@@ -23,6 +23,11 @@ else
   fi
   if [ ! -d "~/serverfiles/steamapps" ]; then
     $SERVERNAME auto-install
+    CONTAINER_INIT="yes"
+  fi
+  # hook for initial start
+  if [ -n "$CONTAINER_INIT" ]; then
+    container_init.sh
   fi
   if [ -n "$UPDATE_SERVER" ]; then
     $SERVERNAME update
@@ -34,6 +39,12 @@ else
   if [ -n "$UPDATE_MODS" ]; then
     update_mods.sh
   fi
+  # hook for every start
+  if [ -n "$CONTAINER_WARMUP" ]; then
+    container_warmup.sh
+  fi
+
+  # run the command
   $SERVERNAME $@
 
   # attempt to attach to tmux gameserver session to keep the server running
