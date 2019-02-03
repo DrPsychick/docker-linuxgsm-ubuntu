@@ -43,7 +43,7 @@ after_success:
     branch="${VERSION}-${UBUNTU_VERSION}";
     echo "Branch: $branch";
     git checkout -b $branch;
-    git pull origin $branch;
+    git pull -X theirs --no-edit --no-commit origin $branch;
     git merge -X theirs --no-edit --no-commit master;
     sed -i -e "s/UBUNTU_VERSION=.*/UBUNTU_VERSION=$UBUNTU_VERSION/" Dockerfile;
     git diff Dockerfile;
