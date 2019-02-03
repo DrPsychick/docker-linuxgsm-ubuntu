@@ -3,13 +3,13 @@ services: docker
 
 env:
   global:
-  - IMAGE=drpsychick/docker-linuxgsm-ubuntu
+    - IMAGE=drpsychick/docker-linuxgsm-ubuntu
   matrix:
-  - UBUNTU_VERSION=latest
-  - UBUNTU_VERSION=disco
-  - UBUNTU_VERSION=bionic
-  - UBUNTU_VERSION=cosmic
-  - UBUNTU_VERSION=xenial
+    - UBUNTU_VERSION=latest
+    - UBUNTU_VERSION=disco
+    - UBUNTU_VERSION=bionic
+    - UBUNTU_VERSION=cosmic
+    - UBUNTU_VERSION=xenial
 
 before_script:
   - docker build -t test --build-arg UBUNTU_VERSION=$UBUNTU_VERSION .
@@ -30,18 +30,25 @@ script:
 
 after_success:
   - >
-    [ $TRAVIS_BRANCH = "master" -a $TRAVIS_PULL_REQUEST = "false" ] && {
-    if [ "$UBUNTU_VERSION" != "latest" ]; then 
+    if [ "$TRAVIS_BRANCH" = "develop" -a "$UBUNTU_VERSION" = "latest" ]; then
+    curl -H "Content-Type: application/json" --data '{"source_type": "Branch", "source_name": "develop"}'
+    -X POST "$DOCKERHUB_TRIGGER";
+    fi
+  - >
+    if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
+    if [ "$UBUNTU_VERSION" = "latest" ]; then
+    curl -H "Content-Type: application/json" --data '{"source_type": "Branch", "source_name": "master"}'
+    -X POST "$DOCKERHUB_TRIGGER";
+    else
     branch="${VERSION}-${UBUNTU_VERSION}";
-    exists="$(test -n "$(git branch -r |grep "$branch")" && echo "exists" || echo "missing")";
-    echo "Branch: $branch ($exists)";
-    if [ "$exists" == "missing" ]; then
+    echo "Branch: $branch";
     git checkout -b $branch;
+    git pull origin $branch;
+    git merge -X theirs --no-edit --no-commit master;
     sed -i -e "s/UBUNTU_VERSION=.*/UBUNTU_VERSION=$UBUNTU_VERSION/" Dockerfile;
     git diff Dockerfile;
     docker build -t $IMAGE:$branch --build-arg UBUNTU_VERSION=$UBUNTU_VERSION . || exit 1;
-    git add Dockerfile && git commit -m "automated tag branch $branch" && git push -u origin $branch;
-    git tag $branch && git push --tags;
+    git commit -a -m "automated build on $branch";
+    git push -u origin $branch;
     fi;
     fi
-    }
