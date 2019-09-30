@@ -1,10 +1,10 @@
-[Docker image: drpsychick/linuxgsm-ubuntu](https://cloud.docker.com/repository/docker/drpsychick/linuxgsm-ubuntu)
+[Docker image: drpsychick/linuxgsm-ubuntu](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu)
 =======================
-[![DockerHub build status](https://img.shields.io/docker/build/drpsychick/linuxgsm-ubuntu.svg)](https://cloud.docker.com/repository/docker/drpsychick/linuxgsm-ubuntu/tags)
-[![DockerHub build](https://img.shields.io/docker/automated/drpsychick/linuxgsm-ubuntu.svg)](https://cloud.docker.com/repository/docker/drpsychick/linuxgsm-ubuntu/timeline)
+[![DockerHub build status](https://img.shields.io/docker/build/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
+[![DockerHub build](https://img.shields.io/docker/automated/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/timeline)
 
 * Source: https://github.com/DrPsychick/docker-linuxgsm-ubuntu
-* Image: https://cloud.docker.com/repository/docker/drpsychick/linuxgsm-ubuntu
+* Image: https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu
 * Inspired by: https://github.com/GameServerManagers/LinuxGSM-Docker
 
 Usage
