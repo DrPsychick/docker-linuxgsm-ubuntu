@@ -1,7 +1,7 @@
 [Docker image: drpsychick/linuxgsm-ubuntu](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu)
 =======================
-[![DockerHub build status](https://img.shields.io/docker/build/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
-[![DockerHub build](https://img.shields.io/docker/automated/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/timeline)
+[![DockerHub build status](https://img.shields.io/docker/cloud/build/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/builds)
+[![DockerHub build](https://img.shields.io/docker/cloud/automated/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
 
 * Source: https://github.com/DrPsychick/docker-linuxgsm-ubuntu
 * Image: https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu
