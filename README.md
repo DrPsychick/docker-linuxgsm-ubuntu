@@ -1,5 +1,6 @@
 [Docker image: drpsychick/linuxgsm-ubuntu](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu)
 =======================
+[![Travis build status](https://travis-ci.org/DrPsychick/docker-linuxgsm-ubuntu.svg?branch=master)](https://travis-ci.org/DrPsychick/docker-linuxgsm-ubuntu)
 [![DockerHub build status](https://img.shields.io/docker/cloud/build/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/builds)
 [![DockerHub build](https://img.shields.io/docker/cloud/automated/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
 
