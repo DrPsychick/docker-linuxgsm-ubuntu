@@ -21,3 +21,7 @@ docker run --rm -t \
   --env SERVERNAME=arkserver \
   drpsychick/linuxgsm-ubuntu start
 ```
+
+Known Issues
+------------
+* Requires a user (`UID 750`) and group (`UID 750`) on the host. All server files must be owned by this user.
