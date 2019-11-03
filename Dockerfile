@@ -21,6 +21,8 @@ RUN dpkg --add-architecture i386 \
     unzip \
     util-linux \
     wget \
+    iproute2 \
+    ethtool \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
