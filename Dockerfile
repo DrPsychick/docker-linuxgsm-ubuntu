@@ -15,7 +15,6 @@ RUN dpkg --add-architecture i386 \
     jq \
     lib32gcc1 \
     libstdc++6:i386 \
-    python \
     python3 \
     tmux \
     unzip \
