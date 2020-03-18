@@ -8,8 +8,13 @@
 * Image: https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu
 * Inspired by: https://github.com/GameServerManagers/LinuxGSM-Docker
 
-Usage
------
+
+#### Attention: by using this image, you accept the `steamcmd` license!
+The license can be found within the image: `/usr/share/doc/steamcmd/copyright`
+
+The license is auto-agreed in the `Dockerfile` with `echo steamcmd steam/question select "I AGREE" | debconf-set-selections` 
+
+### Usage
 Either run game server directly or build your own image based on this one
 
 Run gameserver (mount directory to persist server files!)

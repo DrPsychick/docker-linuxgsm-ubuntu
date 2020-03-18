@@ -3,6 +3,9 @@ FROM ubuntu:$UBUNTU_VERSION
 
 RUN dpkg --add-architecture i386 \
   && apt-get update \
+  # preselect accept steamcmd license \
+  && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
+  && echo steamcmd steam/license: note '' | debconf-set-selections \
   && apt-get install -y \
     bc \
     binutils \
@@ -15,6 +18,7 @@ RUN dpkg --add-architecture i386 \
     jq \
     lib32gcc1 \
     libstdc++6:i386 \
+    lib32stdc++6 \
     python3 \
     tmux \
     unzip \
@@ -22,6 +26,8 @@ RUN dpkg --add-architecture i386 \
     wget \
     iproute2 \
     ethtool \
+    netcat \
+    steamcmd \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
