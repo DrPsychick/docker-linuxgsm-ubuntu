@@ -58,7 +58,7 @@ ENV PATH=$PATH:/home/lgsm
 RUN linuxgsm.sh arkserver \
   && arkserver update-lgsm \
   && rm -rf arkserver lgsm/config-* \
-  && mkdir serverfiles
+  && mkdir -p serverfiles
 
 VOLUME ["/home/lgsm/serverfiles"]
 
