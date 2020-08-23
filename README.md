@@ -1,8 +1,11 @@
-[Docker image: drpsychick/linuxgsm-ubuntu](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu)
-=======================
+# [Docker image: drpsychick/linuxgsm-ubuntu](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu)
+
+[![Docker image](https://img.shields.io/docker/image-size/drpsychick/linuxgsm-ubuntu?sort=date)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
 [![Travis build status](https://travis-ci.org/DrPsychick/docker-linuxgsm-ubuntu.svg?branch=master)](https://travis-ci.org/DrPsychick/docker-linuxgsm-ubuntu)
-[![DockerHub build status](https://img.shields.io/docker/cloud/build/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/builds)
-[![DockerHub build](https://img.shields.io/docker/cloud/automated/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/tags)
+[![DockerHub pulls](https://img.shields.io/docker/pulls/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/)
+[![DockerHub stars](https://img.shields.io/docker/stars/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/)
+[![license](https://img.shields.io/github/license/drpsychick/docker-linuxgsm-ubuntu.svg)](https://github.com/drpsychick/docker-linuxgsm-ubuntu/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/drpsychick/docker-linuxgsm-ubuntu.svg)](https://github.com/drpsychick/docker-linuxgsm-ubuntu)
 
 * Source: https://github.com/DrPsychick/docker-linuxgsm-ubuntu
 * Image: https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu
