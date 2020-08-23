@@ -10,7 +10,8 @@ echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin &> /dev/null |
 if [ "$TRAVIS_BRANCH" = "dev" -a "$UBUNTU_VERSION" = "latest" ]; then
   echo "build and push docker image(s) for version $IMAGE:dev"
   docker build --build-arg UBUNTU_VERSION=$UBUNTU_VERSION \
-    -t $IMAGE:dev --push .
+    -t $IMAGE:dev .
+  docker push $IMAGE:dev
 fi
 
 # push master images (not when it's a pull request)
@@ -19,7 +20,8 @@ if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
   if [ "$UBUNTU_VERSION" = "latest" ]; then
     echo "build and push docker image(s) for version $IMAGE:latest"
     docker build --build-arg UBUNTU_VERSION=$UBUNTU_VERSION \
-      -t $IMAGE:latest --push .
+      -t $IMAGE:latest .
+    docker push $IMAGE:latest
   else
     # build and load it into local docker repository, so we can launch it and determine version
     docker build --build-arg UBUNTU_VERSION=$UBUNTU_VERSION \
@@ -29,6 +31,7 @@ if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     # build again and push with correct version tag
     echo "build and push docker image(s) for version $IMAGE:$VERSION-$UBUNTU_VERSION"
     docker build --build-arg UBUNTU_VERSION=$UBUNTU_VERSION \
-      -t $IMAGE:$VERSION-$UBUNTU_VERSION --push .
+      -t $IMAGE:$VERSION-$UBUNTU_VERSION .
+    docker push $IMAGE:$VERSION-$UBUNTU_VERSION
   fi
 fi
