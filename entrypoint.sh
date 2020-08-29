@@ -5,7 +5,7 @@
 ##
 ## If one wants to use a volume for the data directory, which is the home directory
 ## then we must keep a backup copy of the script on local drive
-if [ ! -e ~/linuxgsm.sh ]; then
+if [ ! -e "$HOME/linuxgsm.sh" ]; then
   echo "Initializing Linuxgsm User Script in New Volume"
   cp /linuxgsm.sh ./linuxgsm.sh
 fi
@@ -15,13 +15,13 @@ if [ -z "$SERVERNAME" ]; then
   "$@"
 else
   # run the server (update if needed)
-  if [ ! -x "~/$SERVERNAME" ]; then
+  if [ ! -x "$HOME/$SERVERNAME" ]; then
     linuxgsm.sh $SERVERNAME
   fi
-  if [ -n "$UPDATE_LGSM" -o ! -d "~/lgsm/functions" ]; then
+  if [ -n "$UPDATE_LGSM" -o ! -d "$HOME/lgsm/functions" ]; then
     $SERVERNAME update-lgsm
   fi
-  if [ ! -d "~/serverfiles/steamapps" ]; then
+  if [ ! -d "$HOME/serverfiles/steamapps" ]; then
     $SERVERNAME auto-install
     CONTAINER_INIT="yes"
   fi
