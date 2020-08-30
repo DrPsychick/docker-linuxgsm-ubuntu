@@ -1,11 +1,17 @@
 ARG UBUNTU_VERSION=latest
 FROM ubuntu:$UBUNTU_VERSION
 
+# for `monitor` command to work: 
+# apt-get install -y npm + npm install gamedig -g (but it enlarges the image!)
 RUN dpkg --add-architecture i386 \
-  && apt-get update \
+  && export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+  # preselect locale
+  && echo "tzdata tzdata/Areas select Europe" | debconf-set-selections \
+  && echo "tzdata tzdata/Zones/Etc select UTC" | debconf-set-selections \
   # preselect accept steamcmd license \
   && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
   && echo steamcmd steam/license: note '' | debconf-set-selections \
+  && apt-get update \
   && apt-get install -y \
     bc \
     binutils \
@@ -27,7 +33,10 @@ RUN dpkg --add-architecture i386 \
     iproute2 \
     ethtool \
     netcat \
+    locales \
     steamcmd \
+    expect \
+  && locale-gen en_US.UTF-8 \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
