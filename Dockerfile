@@ -1,6 +1,8 @@
 ARG UBUNTU_VERSION=latest
 FROM ubuntu:$UBUNTU_VERSION
 
+# for `monitor` command to work: 
+# apt-get install -y npm + npm install gamedig -g (but it enlarges the image!)
 RUN dpkg --add-architecture i386 \
   && apt-get update \
   # preselect accept steamcmd license \
