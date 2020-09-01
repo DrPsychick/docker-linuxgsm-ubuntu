@@ -12,6 +12,7 @@ RUN dpkg --add-architecture i386 \
   && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
   && echo steamcmd steam/license: note '' | debconf-set-selections \
   && apt-get update \
+  && if [ "xenial" = "$UBUNTU_VERSION" ]; then LIBCURL=libcurl3:i386 else LIBCURL=libcurl4:386 fi \
   && apt-get install -y \
     bc \
     binutils \
@@ -25,7 +26,7 @@ RUN dpkg --add-architecture i386 \
     lib32gcc1 \
     libstdc++6:i386 \
     lib32stdc++6 \
-    libcurl4:i386 \
+    $LIBCURL \
     python3 \
     tmux \
     unzip \
@@ -45,7 +46,7 @@ RUN dpkg --add-architecture i386 \
   && git clone https://github.com/barneygale/MCRcon \
   && (cd MCRcon; python3 setup.py install_lib) \
   && rm -rf MCRcon \
-  && apt-get remove --purge git python3-setuptools \
+  && apt-get remove -y --purge git python3-setuptools \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
