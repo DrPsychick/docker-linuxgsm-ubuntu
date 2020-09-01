@@ -12,7 +12,7 @@ RUN dpkg --add-architecture i386 \
   && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
   && echo steamcmd steam/license: note '' | debconf-set-selections \
   && apt-get update \
-  && if [ "xenial" = "$UBUNTU_VERSION" ]; then LIBCURL=libcurl3:i386 else LIBCURL=libcurl4:386 fi \
+  && if [ "xenial" = "$UBUNTU_VERSION" ]; then export LIBCURL=libcurl3:i386 else export LIBCURL=libcurl4:386; fi \
   && apt-get install -y \
     bc \
     binutils \
