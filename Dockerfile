@@ -12,6 +12,7 @@ RUN dpkg --add-architecture i386 \
   && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
   && echo steamcmd steam/license: note '' | debconf-set-selections \
   && apt-get update \
+  && if [ "xenial" = "$UBUNTU_VERSION" ]; then export LIBCURL=libcurl3:i386 else export LIBCURL=libcurl4:386; fi \
   && apt-get install -y \
     bc \
     binutils \
@@ -25,6 +26,7 @@ RUN dpkg --add-architecture i386 \
     lib32gcc1 \
     libstdc++6:i386 \
     lib32stdc++6 \
+    $LIBCURL \
     python3 \
     tmux \
     unzip \
@@ -33,10 +35,18 @@ RUN dpkg --add-architecture i386 \
     iproute2 \
     ethtool \
     netcat \
+    net-tools \
     locales \
     steamcmd \
-    expect \
+    git \
+    python3-setuptools \
+  #  expect \ # just makes steamcmd slower (consumes CPU)
   && locale-gen en_US.UTF-8 \
+  # add MCRcon library for healthcheck
+  && git clone https://github.com/barneygale/MCRcon \
+  && (cd MCRcon; python3 setup.py install_lib) \
+  && rm -rf MCRcon \
+  && apt-get remove -y --purge git python3-setuptools \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
@@ -47,6 +57,7 @@ COPY entrypoint.sh \
      update_mods.sh \
      container_init.sh \
      container_warmup.sh \
+     rcon.py \
      /
 RUN chmod +x /entrypoint.sh /update_mods.sh /container_*.sh
 
@@ -66,13 +77,22 @@ ENV PATH=$PATH:/home/lgsm
 # make sure lgsm is part of the image
 RUN linuxgsm.sh arkserver \
   && arkserver update-lgsm \
+  # to be removed when PR released: https://github.com/GameServerManagers/LinuxGSM/pull/3011
+  && sed -i -e 's/+quit | tee -a/+quit | uniq | tee -a/' lgsm/functions/core_dl.sh \
   && rm -rf arkserver lgsm/config-* \
   && mkdir -p serverfiles
 
 VOLUME ["/home/lgsm/serverfiles"]
 
-ENV SERVERNAME=""
-ENV UPDATE_LGSM="" UPDATE_SERVER="" FORCE_VALIDATE="" UPDATE_MODS=""
-ENV CONTAINER_INIT="" CONTAINER_WARMUP=""
+ENV SERVERNAME="" \
+    UPDATE_LGSM="" \
+    UPDATE_SERVER="" \
+    FORCE_VALIDATE="" \
+    UPDATE_MODS="" \
+    CONTAINER_INIT="" \
+    CONTAINER_WARMUP="" \
+    RCON_HOST="localhost" \
+    RCON_PORT=27015 \
+    RCON_PASSWORD=""
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["linuxgsm.sh"]
