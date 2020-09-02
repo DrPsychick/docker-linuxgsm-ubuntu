@@ -1,15 +1,16 @@
-language: bash
+dist: bionic
+os: linux
+language: shell
 services: docker
 
 env:
   global:
     - IMAGE=drpsychick/linuxgsm-ubuntu
-  matrix:
+  jobs:
     - UBUNTU_VERSION=latest
     - UBUNTU_VERSION=focal
     - UBUNTU_VERSION=eoan
     - UBUNTU_VERSION=bionic
-    - UBUNTU_VERSION=xenial
 
 before_script:
   - docker build -t $IMAGE --build-arg UBUNTU_VERSION=$UBUNTU_VERSION .
