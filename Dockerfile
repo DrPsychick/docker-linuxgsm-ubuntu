@@ -26,6 +26,7 @@ RUN dpkg --add-architecture i386 \
     libstdc++6:i386 \
     lib32stdc++6 \
     libcurl4:i386 \
+    libcompress-raw-zlib-perl \
     python3 \
     tmux \
     unzip \
@@ -92,6 +93,6 @@ ENV SERVERNAME="" \
     CONTAINER_WARMUP="" \
     RCON_HOST="localhost" \
     RCON_PORT=27015 \
-    RCON_PASSWORD=""
+    RCON_PASS=""
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["linuxgsm.sh"]
