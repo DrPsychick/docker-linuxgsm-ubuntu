@@ -26,6 +26,7 @@ RUN dpkg --add-architecture i386 \
     libstdc++6:i386 \
     lib32stdc++6 \
     libcurl4:i386 \
+    libsdl2-2.0.0:i386 \
     libcompress-raw-zlib-perl \
     python3 \
     tmux \
