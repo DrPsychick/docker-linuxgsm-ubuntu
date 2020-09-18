@@ -6,6 +6,8 @@
 [![DockerHub stars](https://img.shields.io/docker/stars/drpsychick/linuxgsm-ubuntu.svg)](https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu/)
 [![license](https://img.shields.io/github/license/drpsychick/docker-linuxgsm-ubuntu.svg)](https://github.com/drpsychick/docker-linuxgsm-ubuntu/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/drpsychick/docker-linuxgsm-ubuntu.svg)](https://github.com/drpsychick/docker-linuxgsm-ubuntu)
+[![Paypal](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FTXDN7LCDWUEA&source=url)
+[![GitHub Sponsor](https://img.shields.io/badge/github-sponsor-blue?logo=github)](https://github.com/sponsors/DrPsychick)
 
 * Source: https://github.com/DrPsychick/docker-linuxgsm-ubuntu
 * Image: https://hub.docker.com/r/drpsychick/linuxgsm-ubuntu
