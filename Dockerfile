@@ -39,15 +39,15 @@ RUN dpkg --add-architecture i386 \
     net-tools \
     locales \
     steamcmd \
-    git \
-    python3-setuptools \
+#    git \
+#    python3-setuptools \
   #  expect \ # just makes steamcmd slower (consumes CPU)
   && locale-gen en_US.UTF-8 \
   # add MCRcon library for healthcheck
-  && git clone https://github.com/barneygale/MCRcon \
-  && (cd MCRcon; python3 setup.py install_lib) \
-  && rm -rf MCRcon \
-  && apt-get remove -y --purge git python3-setuptools \
+#  && git clone https://github.com/barneygale/MCRcon \
+#  && (cd MCRcon; python3 setup.py install_lib) \
+#  && rm -rf MCRcon \
+#  && apt-get remove -y --purge git python3-setuptools \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
@@ -58,7 +58,7 @@ COPY entrypoint.sh \
      update_mods.sh \
      container_init.sh \
      container_warmup.sh \
-     rcon.py \
+#     rcon.py \
      /
 RUN chmod +x /entrypoint.sh /update_mods.sh /container_*.sh
 
@@ -95,5 +95,6 @@ ENV SERVERNAME="" \
     RCON_HOST="localhost" \
     RCON_PORT=27015 \
     RCON_PASS=""
+#HEALTHCHECK --interval=10s --timeout=1s --retries=3 CMD python3 /home/lgsm/rcon.py listplayers
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["linuxgsm.sh"]
