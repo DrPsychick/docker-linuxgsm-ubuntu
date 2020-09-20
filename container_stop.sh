@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "I would now stop the server gracefully './servername stop'"
+# stop tmux server -> gracefully ends all sessions
+tmux kill-server
