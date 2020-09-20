@@ -1,13 +1,8 @@
 #!/bin/bash
 
-## Because of a limitation in LinuxGSM script it must be run from the directory
-## It is installed in.
-##
-## If one wants to use a volume for the data directory, which is the home directory
-## then we must keep a backup copy of the script on local drive
-if [ ! -e "$HOME/linuxgsm.sh" ]; then
-  echo "Initializing Linuxgsm User Script in New Volume"
-  cp /linuxgsm.sh ./linuxgsm.sh
+# handle graceful shutdown (saveworld)
+if [ -x /home/lgsm/container_stop.sh ]; then
+  trap /home/lgsm/container_stop.sh INT TERM KILL
 fi
 
 if [ -z "$SERVERNAME" ]; then

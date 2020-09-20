@@ -54,21 +54,18 @@ RUN dpkg --add-architecture i386 \
   && rm -rf /tmp/* \
   && rm -rf /var/tmp/*
 
-COPY entrypoint.sh \
-     update_mods.sh \
-     container_init.sh \
-     container_warmup.sh \
-#     rcon.py \
-     /
-RUN chmod +x /entrypoint.sh /update_mods.sh /container_*.sh
-
 # setup lgsm user
 # keep compatibility with https://github.com/GameServerManagers/LinuxGSM-Docker
 RUN groupadd -g 750 lgsm \
-  && useradd -g 750 -u 750 -m -s /bin/bash -G tty lgsm \
-  && wget https://linuxgsm.com/dl/linuxgsm.sh \
-  && chmod +x /linuxgsm.sh \
-  && cp /linuxgsm.sh /update_mods.sh /home/lgsm/ \
+  && useradd -g 750 -u 750 -m -s /bin/bash -G tty lgsm
+
+COPY entrypoint.sh /
+COPY update_mods.sh \
+     container_init.sh \
+     container_warmup.sh \
+     container_stop.sh \
+     /home/lgsm/
+RUN chmod +x /entrypoint.sh /home/lgsm/update_mods.sh /home/lgsm/container_*.sh \
   && chown lgsm:lgsm /home/lgsm/*.sh
 
 USER lgsm
@@ -76,7 +73,9 @@ WORKDIR /home/lgsm
 ENV PATH=$PATH:/home/lgsm
 
 # make sure lgsm is part of the image
-RUN linuxgsm.sh arkserver \
+RUN wget https://linuxgsm.com/dl/linuxgsm.sh \
+  && chmod +x linuxgsm.sh \
+  && linuxgsm.sh arkserver \
   && arkserver update-lgsm \
   # to be removed when PR released: https://github.com/GameServerManagers/LinuxGSM/pull/3011
   && sed -i -e 's/+quit | tee -a/+quit | uniq | tee -a/' lgsm/functions/core_dl.sh \
