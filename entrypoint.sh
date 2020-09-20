@@ -45,7 +45,7 @@ else
   # keep this process running
   if [ "$1" = "start" ]; then
     # tail server log in a sub process
-    tail -fF log/server/ShooterGame.log &
+    tail -fF log/server/*.log &
 
     # wait for tmux to quit - do this in this shell for trap to take effect
     tmux_pid=$(tmux display-message -pF '#{pid}')
