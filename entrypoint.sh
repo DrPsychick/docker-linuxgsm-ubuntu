@@ -42,7 +42,19 @@ else
   # run the command
   $SERVERNAME $@
 
-  # attempt to attach to tmux gameserver session to keep the server running
-  # requires -t (tty)
-  tmux set -g status off && tmux attach 2> /dev/null
+  # keep this process running
+  if [ "$1" = "start" ]; then
+    # tail server log in a sub process
+    tail -fF log/server/ShooterGame.log &
+
+    # wait for tmux to quit - do this in this shell for trap to take effect
+    tmux_pid=$(tmux display-message -pF '#{pid}')
+    while (true); do
+      ps $tmux_pid >/dev/null
+      if [ $? -ne 0 ]; then
+        break
+      fi
+      sleep 2
+    done
+  fi
 fi
