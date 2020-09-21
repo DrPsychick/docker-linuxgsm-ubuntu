@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# handle graceful shutdown (saveworld)
+# hook to handle graceful shutdown (saveworld)
 if [ -x /home/lgsm/container_stop.sh ]; then
-  trap /home/lgsm/container_stop.sh INT TERM KILL
+  trap /home/lgsm/container_stop.sh INT QUIT TERM KILL
 fi
 
 if [ -z "$SERVERNAME" ]; then
@@ -43,18 +43,13 @@ else
   $SERVERNAME $@
 
   # keep this process running
-  if [ "$1" = "start" ]; then
-    # tail server log in a sub process
-    tail -fF log/server/*.log &
+  if [ "x$1" = "xstart" ]; then
+    echo "--> Tailing logs and waiting for tmux session to quit..."
+    # tail console and server log in a sub process (to show what's happening in docker logs)
+    tail -fF log/console/*console.log $(find log/server/ -mtime -0.05) &
 
     # wait for tmux to quit - do this in this shell for trap to take effect
     tmux_pid=$(tmux display-message -pF '#{pid}')
-    while (true); do
-      ps $tmux_pid >/dev/null
-      if [ $? -ne 0 ]; then
-        break
-      fi
-      sleep 2
-    done
+    while (ps $tmux_pid >/dev/null); do sleep 2; done
   fi
 fi
