@@ -47,7 +47,7 @@ else
     # wait for logs to be created, then tail them (show whats happening in docker logs)
     echo "--> Tailing logs and waiting for tmux session to quit..."
     sleep 10
-    tail -fF $(find log -mtime -0.01) &
+    tail -F $(find -L log -mtime -0.01 -type f) &
 
     # wait for tmux to quit - do this in this shell for trap to take effect
     tmux_pid=$(tmux display-message -pF "#{pid}")
