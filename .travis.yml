@@ -8,8 +8,8 @@ env:
     - IMAGE=drpsychick/linuxgsm-ubuntu
   jobs:
     - UBUNTU_VERSION=latest
+#    - UBUNTU_VERSION=groovy # need to solve E: Package 'lib32gcc1' has no installation candidate
     - UBUNTU_VERSION=focal
-    - UBUNTU_VERSION=eoan
     - UBUNTU_VERSION=bionic
 
 before_script:
