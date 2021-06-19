@@ -39,15 +39,15 @@ RUN dpkg --add-architecture i386 \
     net-tools \
     locales \
     steamcmd \
-#    git \
-#    python3-setuptools \
+    git \
+    python3-setuptools \
   #  expect \ # just makes steamcmd slower (consumes CPU)
   && locale-gen en_US.UTF-8 \
   # add MCRcon library for healthcheck
-#  && git clone https://github.com/barneygale/MCRcon \
-#  && (cd MCRcon; python3 setup.py install_lib) \
-#  && rm -rf MCRcon \
-#  && apt-get remove -y --purge git python3-setuptools \
+  && git clone https://github.com/barneygale/MCRcon \
+  && (cd MCRcon; python3 setup.py install_lib) \
+  && rm -rf MCRcon \
+  && apt-get remove -y --purge git python3-setuptools \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* \
@@ -64,6 +64,7 @@ COPY update_mods.sh \
      container_init.sh \
      container_warmup.sh \
      container_stop.sh \
+     rcon.py \
      /home/lgsm/
 RUN chmod +x /entrypoint.sh /home/lgsm/update_mods.sh /home/lgsm/container_*.sh \
   && chown lgsm:lgsm /home/lgsm/*.sh
@@ -81,8 +82,6 @@ RUN wget -O LinuxGSM-${LGSM_VERSION}.tgz https://github.com/GameServerManagers/L
   && chmod +x linuxgsm.sh lgsm/functions/*.sh \
   && linuxgsm.sh arkserver \
   && arkserver update-lgsm \
-  # to be removed when PR released: https://github.com/GameServerManagers/LinuxGSM/pull/3011
-#  && sed -i -e 's/+quit | tee -a/+quit | uniq | tee -a/' lgsm/functions/core_dl.sh \
   && rm -rf arkserver lgsm/config-* \
   && mkdir -p serverfiles
 
