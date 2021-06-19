@@ -73,12 +73,16 @@ WORKDIR /home/lgsm
 ENV PATH=$PATH:/home/lgsm
 
 # make sure lgsm is part of the image
-RUN wget https://linuxgsm.com/dl/linuxgsm.sh \
-  && chmod +x linuxgsm.sh \
+ARG LGSM_VERSION=21.2.4
+RUN wget -O LinuxGSM-${LGSM_VERSION}.tgz https://github.com/GameServerManagers/LinuxGSM/archive/refs/tags/v${LGSM_VERSION}.tar.gz \
+  && tar -xzf LinuxGSM-${LGSM_VERSION}.tgz \
+  && mv LinuxGSM-${LGSM_VERSION}/* ./ \
+  && rm -rf LinuxGSM-${LGSM_VERSION} && rm LinuxGSM-${LGSM_VERSION}.tgz \
+  && chmod +x linuxgsm.sh lgsm/functions/*.sh \
   && linuxgsm.sh arkserver \
   && arkserver update-lgsm \
   # to be removed when PR released: https://github.com/GameServerManagers/LinuxGSM/pull/3011
-  && sed -i -e 's/+quit | tee -a/+quit | uniq | tee -a/' lgsm/functions/core_dl.sh \
+#  && sed -i -e 's/+quit | tee -a/+quit | uniq | tee -a/' lgsm/functions/core_dl.sh \
   && rm -rf arkserver lgsm/config-* \
   && mkdir -p serverfiles
 
