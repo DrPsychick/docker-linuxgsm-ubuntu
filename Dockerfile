@@ -3,6 +3,7 @@ FROM ubuntu:$UBUNTU_VERSION
 
 # for `monitor` command to work: 
 # apt-get install -y npm + npm install gamedig -g (but it enlarges the image!)
+ARG UBUNTU_VERSION=latest
 RUN dpkg --add-architecture i386 \
   && export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
   # preselect locale
@@ -12,6 +13,8 @@ RUN dpkg --add-architecture i386 \
   && echo steamcmd steam/question select "I AGREE" | debconf-set-selections \
   && echo steamcmd steam/license: note '' | debconf-set-selections \
   && apt-get update \
+  && if [ -n "$(echo $UBUNTU_VERSION | grep -e focal -e bionic)" ]; then \
+    apt install -y lib32gcc1; else apt install -y lib32gcc-s1; fi \
   && apt-get install -y \
     bc \
     binutils \
@@ -40,8 +43,6 @@ RUN dpkg --add-architecture i386 \
     steamcmd \
     git \
     python3-setuptools \
-  && if [ -n "$(echo $UBUNTU_VERSION | grep -e focal -e bionic)" ]; then \
-    apt install -y lib32gcc1; else apt install -y lib32gcc-s1; fi \
   #  expect \ # just makes steamcmd slower (consumes CPU)
   && locale-gen en_US.UTF-8 \
   # add MCRcon library for healthcheck
