@@ -22,7 +22,6 @@ RUN dpkg --add-architecture i386 \
     file \
     gzip \
     jq \
-    lib32gcc1 \
     libstdc++6:i386 \
     lib32stdc++6 \
     libcurl4:i386 \
@@ -41,6 +40,8 @@ RUN dpkg --add-architecture i386 \
     steamcmd \
     git \
     python3-setuptools \
+  && if [ -n "$(echo $UBUNTU_VERSION | grep -e focal -e bionic)" ]; then \
+    apt install -y lib32gcc1; else apt install -y lib32gcc-s1; fi \
   #  expect \ # just makes steamcmd slower (consumes CPU)
   && locale-gen en_US.UTF-8 \
   # add MCRcon library for healthcheck
